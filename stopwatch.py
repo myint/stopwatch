@@ -1,8 +1,6 @@
 #!/usr/bin/env python
-# stopwatch is a pygame based stopwatch
 # Copyright (C) 2011 Alejandro Varas
 # based on code taken from http://www.bonf.net/2007/05/18/so/
-
 ######################################################################
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,6 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #######################################################################
 
+"""pygame-based stopwatch."""
+
 from __future__ import division
 
 import datetime
@@ -28,7 +28,7 @@ from pygame.colordict import THECOLORS
 
 
 def create_window():
-    """Return (surface, update_function)."""
+    """Return (surface, draw_function)."""
     video_flags = pygame.FULLSCREEN
     pygame.init()
 
@@ -53,7 +53,8 @@ def create_window():
     font_blit_point = (resolution[0] // 16,
                        resolution[1] // 2 - font_rect[1] // 2)
 
-    def update(text):
+    def draw(text):
+        """Draw text."""
         # Fill the screen with white, to erase the previous time.
         surface.fill(THECOLORS["white"])
         surface.blit(font.render(text, 1, THECOLORS["black"]),
@@ -61,11 +62,12 @@ def create_window():
 
         pygame.display.flip()
 
-    return (surface, update)
+    return (surface, draw)
 
 
 def main():
-    (surface, updater) = create_window()
+    """Entry point."""
+    (surface, draw) = create_window()
 
     fullscreen = True
     running = False
@@ -104,14 +106,14 @@ def main():
         if running:
             milliseconds = (pygame.time.get_ticks() - start_tick)
 
-        t = datetime.time(
+        current_time = datetime.time(
             (milliseconds // 1000) // 3600,
             (milliseconds // 1000) // 60 % 60,
             (milliseconds // 1000) % 60)
 
         hundredth_of_millisecond = str(milliseconds)[-3:][:2]
-        updater(','.join((t.strftime("%H:%M:%S"),
-                         hundredth_of_millisecond)))
+        draw(','.join((current_time.strftime("%H:%M:%S"),
+                      hundredth_of_millisecond)))
 
         pygame.time.wait(1)
 
