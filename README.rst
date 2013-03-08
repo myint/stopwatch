@@ -1,7 +1,7 @@
 stopwatch
 =========
 
-.. image:: http://myint.github.com/stopwatch/screenshot.png
+.. image:: https://raw.github.com/myint/stopwatch/master/screenshot.png
    :alt: screenshot
    :align: center
 
