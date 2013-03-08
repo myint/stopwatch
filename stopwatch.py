@@ -32,6 +32,7 @@ def main():
     video_flags = fullscreen and pygame.FULLSCREEN
     pygame.init()
 
+    pygame.display.set_caption('stopwatch')
     resolution = pygame.display.list_modes()[0]
     surface = pygame.display.set_mode(resolution, video_flags)
 

@@ -1,28 +1,12 @@
-Stopwatch is a pygame based stopwatch I've made to help my brother's gym improvement.
+stopwatch
+=========
 
-You can get the code at https://github.com/alej0varas/stopwatch
-or visit http://stopwatch.alej0.tk
+.. image:: http://myint.github.com/stopwatch/screenshot.png
+   :alt: screenshot
+   :align: center
 
-Requirements
-============
-
-pygame 1.9, visit http://www.pygame.org/install.html
-
-Run
-===
-
-Unix like OS's
---------------
-$ ./main.py
-
-Other
+Usage
 -----
-
-Not tested, but double click should work.
-
-Use
-===
-
 +-------+--------------------------------------+
 |  Key  |                Action                |
 +-------+--------------------------------------+
@@ -34,5 +18,3 @@ Use
 +-------+--------------------------------------+
 |  Esc  |                 Exit                 |
 +-------+--------------------------------------+
-
-That's all for now ;)
