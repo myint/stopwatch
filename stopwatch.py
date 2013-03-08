@@ -65,6 +65,18 @@ def create_window():
     return draw
 
 
+def milliseconds_to_text(milliseconds):
+    """Return text representation."""
+    current_time = datetime.time(
+        (milliseconds // 1000) // 3600,
+        (milliseconds // 1000) // 60 % 60,
+        (milliseconds // 1000) % 60)
+
+    hundredth_of_millisecond = str(milliseconds)[-3:][:2]
+    return ','.join((current_time.strftime("%H:%M:%S"),
+                    hundredth_of_millisecond))
+
+
 def main():
     """Entry point."""
     draw = create_window()
@@ -106,14 +118,7 @@ def main():
         if running:
             milliseconds = (pygame.time.get_ticks() - start_tick)
 
-        current_time = datetime.time(
-            (milliseconds // 1000) // 3600,
-            (milliseconds // 1000) // 60 % 60,
-            (milliseconds // 1000) % 60)
-
-        hundredth_of_millisecond = str(milliseconds)[-3:][:2]
-        draw(','.join((current_time.strftime("%H:%M:%S"),
-                      hundredth_of_millisecond)))
+        draw(milliseconds_to_text(milliseconds))
 
         pygame.time.wait(1)
 
