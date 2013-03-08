@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.6
+#!/usr/bin/env python2.7
 # stopwatch is a pygame based stopwatch
 # Copyright (C) 2011 Alejandro Varas
 # based on code taken from http://www.bonf.net/2007/05/18/so/
