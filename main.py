@@ -18,19 +18,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #######################################################################
 
-from datetime import time, timedelta
+import datetime
 
 import pygame
 import pygame.font
 from pygame.colordict import THECOLORS
-from pygame.locals import *
 
 
 def main():
-    font_path = "data/talldark.ttf"
     fullscreen = True
-    video_flags = fullscreen and FULLSCREEN
-    print video_flags
+    video_flags = fullscreen and pygame.FULLSCREEN
     pygame.init()
 
     # get the highest resolution
@@ -38,7 +35,6 @@ def main():
 
     # create our main window SDL surface
     surface = pygame.display.set_mode(resolution, video_flags)
-    pygame.display.set_caption("Stopwatch -- stopwatch.alej0.tk")
 
     # get highest font size that fits resolution width
     font_size = int(resolution[1] / 1.2)
@@ -46,7 +42,7 @@ def main():
     max_string_length = resolution[0] / 8 * 7
 
     while not font_size_fits:
-        font = pygame.font.Font(font_path, font_size)
+        font = pygame.font.SysFont('courier new', font_size)
         font_rect = font.size("00:00:00,00")
         if font_rect[0] > max_string_length:
             font_size = font_size - 10
@@ -64,11 +60,11 @@ def main():
     while True:
         event = pygame.event.poll()
 
-        if event.type == KEYUP:
-            if event.key == K_ESCAPE:
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_ESCAPE:
                 break
 
-            if event.key == K_SPACE:
+            if event.key == pygame.K_SPACE:
                 if not on:
                     # starting the timer, so set the tick count reference to the current tick count
                     # plus the last tick count
@@ -77,15 +73,15 @@ def main():
                 # swap value
                 on = not on
 
-            elif event.key == K_r:
+            elif event.key == pygame.K_r:
                 # initialize the tick count
                 a = 0
                 on = False
 
-            elif event.key == K_f:
+            elif event.key == pygame.K_f:
                 # swap video mode widowed, fullscreen
                 fullscreen = not fullscreen
-                video_flags = (fullscreen and FULLSCREEN) | (not fullscreen and RESIZABLE)
+                video_flags = (fullscreen and pygame.FULLSCREEN) | (not fullscreen and pygame.RESIZABLE)
                 pygame.display.set_mode(resolution, video_flags)
 
         if on:
@@ -93,7 +89,7 @@ def main():
             a = (pygame.time.get_ticks() - start_tick)
 
         # render the time, by converting ticks to datetime.time + hundredth of a second
-        t = time((a / 1000) / 3600, ((a / 1000) / 60 % 60), (a / 1000) % 60)
+        t = datetime.time((a / 1000) / 3600, ((a / 1000) / 60 % 60), (a / 1000) % 60)
         h_o_s = str(a)[-3:][:2] # hundredth of a second
         t_string = ','.join((t.strftime("%H:%M:%S"), h_o_s))
         tempsurface = font.render(t_string, 1, THECOLORS["black"])
@@ -102,7 +98,7 @@ def main():
         surface.blit(tempsurface, font_blit_point) # draw the time
 
         pygame.display.flip()
-        pygame.time.wait(100)
+        pygame.time.wait(1)
 
 
 if __name__ == '__main__':
