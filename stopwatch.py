@@ -28,7 +28,7 @@ from pygame.colordict import THECOLORS
 
 
 def create_window():
-    """Return (surface, draw_function)."""
+    """Return draw function, which takes a text parameter."""
     video_flags = pygame.FULLSCREEN
     pygame.init()
 
@@ -62,12 +62,12 @@ def create_window():
 
         pygame.display.flip()
 
-    return (surface, draw)
+    return draw
 
 
 def main():
     """Entry point."""
-    (surface, draw) = create_window()
+    draw = create_window()
 
     fullscreen = True
     running = False
@@ -101,7 +101,7 @@ def main():
                 video_flags = (
                     fullscreen and pygame.FULLSCREEN) | (
                         not fullscreen and pygame.RESIZABLE)
-                pygame.display.set_mode(surface.get_size(), video_flags)
+                pygame.display.set_mode((0, 0), video_flags)
 
         if running:
             milliseconds = (pygame.time.get_ticks() - start_tick)
