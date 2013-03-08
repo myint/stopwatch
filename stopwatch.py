@@ -18,6 +18,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #######################################################################
 
+from __future__ import division
+
 import datetime
 
 import pygame
@@ -39,7 +41,7 @@ def main():
     # get highest font size that fits resolution width
     font_size = int(resolution[1] / 1.2)
     font_size_fits = False
-    max_string_length = resolution[0] / 8 * 7
+    max_string_length = resolution[0] // 8 * 7
 
     while not font_size_fits:
         font = pygame.font.SysFont('courier new', font_size)
@@ -50,7 +52,7 @@ def main():
             font_size_fits = True
 
     # get the point to draw the font in the midle of the screen
-    font_blit_point = resolution[0] / 16, resolution[1] / 2 - font_rect[1] / 2
+    font_blit_point = resolution[0] // 16, resolution[1] // 2 - font_rect[1] // 2
 
     on = False  # wheter the stopwatch is running or not
     milliseconds = 0  # milliseconds from start
@@ -91,8 +93,8 @@ def main():
         # render the time, by converting ticks to datetime.time + hundredth of
         # a second
         t = datetime.time(
-            (milliseconds / 1000) / 3600, ((milliseconds / 1000) / 60 %
-                                           60), (milliseconds / 1000) %
+            (milliseconds // 1000) // 3600, ((milliseconds // 1000) // 60 %
+                                           60), (milliseconds // 1000) %
             60)
         h_o_s = str(milliseconds)[-3:][:2]  # hundredth of a second
         t_string = ','.join((t.strftime("%H:%M:%S"), h_o_s))
