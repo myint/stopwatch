@@ -52,10 +52,9 @@ def main():
     # get the point to draw the font in the midle of the screen
     font_blit_point = resolution[0] / 16, resolution[1] / 2 - font_rect[1] / 2
 
-
-    on = False #wheter the stopwatch is running or not
-    a = 0 # milliseconds from start
-    start_tick = 0 # the number of ticks when we began counting
+    on = False  # wheter the stopwatch is running or not
+    milliseconds = 0  # milliseconds from start
+    start_tick = 0  # the number of ticks when we began counting
 
     while True:
         event = pygame.event.poll()
@@ -66,36 +65,42 @@ def main():
 
             if event.key == pygame.K_SPACE:
                 if not on:
-                    # starting the timer, so set the tick count reference to the current tick count
-                    # plus the last tick count
-                    start_tick = pygame.time.get_ticks() - a
+                    # starting the timer, so set the tick count reference to
+                    # the current tick count plus the last tick count
+                    start_tick = pygame.time.get_ticks() - milliseconds
 
                 # swap value
                 on = not on
 
             elif event.key == pygame.K_r:
                 # initialize the tick count
-                a = 0
+                milliseconds = 0
                 on = False
 
             elif event.key == pygame.K_f:
                 # swap video mode widowed, fullscreen
                 fullscreen = not fullscreen
-                video_flags = (fullscreen and pygame.FULLSCREEN) | (not fullscreen and pygame.RESIZABLE)
+                video_flags = (
+                    fullscreen and pygame.FULLSCREEN) | (
+                        not fullscreen and pygame.RESIZABLE)
                 pygame.display.set_mode(resolution, video_flags)
 
         if on:
-            # get the amount of ticks(milliseconds) that passed from the start
-            a = (pygame.time.get_ticks() - start_tick)
+            milliseconds = (pygame.time.get_ticks() - start_tick)
 
-        # render the time, by converting ticks to datetime.time + hundredth of a second
-        t = datetime.time((a / 1000) / 3600, ((a / 1000) / 60 % 60), (a / 1000) % 60)
-        h_o_s = str(a)[-3:][:2] # hundredth of a second
+        # render the time, by converting ticks to datetime.time + hundredth of
+        # a second
+        t = datetime.time(
+            (milliseconds / 1000) / 3600, ((milliseconds / 1000) / 60 %
+                                           60), (milliseconds / 1000) %
+            60)
+        h_o_s = str(milliseconds)[-3:][:2]  # hundredth of a second
         t_string = ','.join((t.strftime("%H:%M:%S"), h_o_s))
         tempsurface = font.render(t_string, 1, THECOLORS["black"])
 
-        surface.fill(THECOLORS["white"]) #fill the screen with white, to erase the previous time
-        surface.blit(tempsurface, font_blit_point) # draw the time
+        # fill the screen with white, to erase the previous time
+        surface.fill(THECOLORS["white"])
+        surface.blit(tempsurface, font_blit_point)
 
         pygame.display.flip()
         pygame.time.wait(1)
