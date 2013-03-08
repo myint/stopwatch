@@ -27,9 +27,9 @@ import pygame.font
 from pygame.colordict import THECOLORS
 
 
-def main():
-    fullscreen = True
-    video_flags = fullscreen and pygame.FULLSCREEN
+def create_window():
+    """Return (surface, update_function)."""
+    video_flags = pygame.FULLSCREEN
     pygame.init()
 
     pygame.display.set_caption('stopwatch')
@@ -53,6 +53,21 @@ def main():
     font_blit_point = (resolution[0] // 16,
                        resolution[1] // 2 - font_rect[1] // 2)
 
+    def update(text):
+        # Fill the screen with white, to erase the previous time.
+        surface.fill(THECOLORS["white"])
+        surface.blit(font.render(text, 1, THECOLORS["black"]),
+                     font_blit_point)
+
+        pygame.display.flip()
+
+    return (surface, update)
+
+
+def main():
+    (surface, updater) = create_window()
+
+    fullscreen = True
     running = False
     milliseconds = 0
     start_tick = 0  # The number of ticks when we began counting.
@@ -84,7 +99,7 @@ def main():
                 video_flags = (
                     fullscreen and pygame.FULLSCREEN) | (
                         not fullscreen and pygame.RESIZABLE)
-                pygame.display.set_mode(resolution, video_flags)
+                pygame.display.set_mode(surface.get_size(), video_flags)
 
         if running:
             milliseconds = (pygame.time.get_ticks() - start_tick)
@@ -95,15 +110,9 @@ def main():
             (milliseconds // 1000) % 60)
 
         hundredth_of_millisecond = str(milliseconds)[-3:][:2]
-        t_string = ','.join((t.strftime("%H:%M:%S"),
-                            hundredth_of_millisecond))
+        updater(','.join((t.strftime("%H:%M:%S"),
+                         hundredth_of_millisecond)))
 
-        # Fill the screen with white, to erase the previous time.
-        surface.fill(THECOLORS["white"])
-        surface.blit(font.render(t_string, 1, THECOLORS["black"]),
-                     font_blit_point)
-
-        pygame.display.flip()
         pygame.time.wait(1)
 
 
