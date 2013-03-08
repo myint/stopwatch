@@ -29,12 +29,11 @@ from pygame.colordict import THECOLORS
 
 def create_window():
     """Return draw function, which takes a text parameter."""
-    video_flags = pygame.FULLSCREEN
     pygame.init()
 
     pygame.display.set_caption('stopwatch')
     resolution = pygame.display.list_modes()[0]
-    surface = pygame.display.set_mode(resolution, video_flags)
+    surface = pygame.display.set_mode(resolution, pygame.FULLSCREEN)
 
     # Get highest font size that fits resolution width.
     font_size = int(resolution[1] / 1.2)
