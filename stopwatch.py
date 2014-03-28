@@ -42,7 +42,7 @@ def create_window():
 
     while not font_size_fits:
         font = pygame.font.SysFont('courier new', font_size)
-        font_rect = font.size("00:00:00,00")
+        font_rect = font.size('00:00:00,00')
         if font_rect[0] > max_string_length:
             font_size = font_size - 10
         else:
@@ -55,8 +55,8 @@ def create_window():
     def draw(text):
         """Draw text."""
         # Fill the screen with white, to erase the previous time.
-        surface.fill(THECOLORS["white"])
-        surface.blit(font.render(text, 1, THECOLORS["black"]),
+        surface.fill(THECOLORS['white'])
+        surface.blit(font.render(text, 1, THECOLORS['black']),
                      font_blit_point)
 
         pygame.display.flip()
@@ -72,7 +72,7 @@ def milliseconds_to_text(milliseconds):
         (milliseconds // 1000) % 60)
 
     hundredth_of_millisecond = str(milliseconds)[-3:][:2]
-    return ','.join((current_time.strftime("%H:%M:%S"),
+    return ','.join((current_time.strftime('%H:%M:%S'),
                     hundredth_of_millisecond))
 
 
@@ -111,7 +111,7 @@ def main():
                 fullscreen = not fullscreen
                 video_flags = (
                     fullscreen and pygame.FULLSCREEN) | (
-                        not fullscreen and pygame.RESIZABLE)
+                    not fullscreen and pygame.RESIZABLE)
                 pygame.display.set_mode((0, 0), video_flags)
 
         if running:
