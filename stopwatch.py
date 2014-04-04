@@ -32,8 +32,8 @@ def create_window():
     pygame.init()
 
     pygame.display.set_caption('stopwatch')
-    resolution = pygame.display.list_modes()[0]
-    surface = pygame.display.set_mode(resolution, pygame.FULLSCREEN)
+    resolution = [size // 2 for size in pygame.display.list_modes()[0]]
+    surface = pygame.display.set_mode(resolution)
 
     # Get highest font size that fits resolution width.
     font_size = int(resolution[1] / 1.2)
@@ -80,7 +80,7 @@ def main():
     """Entry point."""
     draw = create_window()
 
-    fullscreen = True
+    fullscreen = False
     running = False
     milliseconds = 0
     start_tick = 0  # The number of ticks when we began counting.
