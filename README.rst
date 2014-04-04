@@ -2,9 +2,9 @@ stopwatch
 =========
 pygame-based stopwatch with Python 3 support.
 
-.. image:: https://raw.github.com/myint/stopwatch/master/screenshot.png
-   :alt: screenshot
-   :align: center
+.. image:: https://raw.githubusercontent.com/myint/stopwatch/master/screenshot.png
+    :alt: screenshot
+    :align: center
 
 Usage
 -----
